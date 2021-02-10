@@ -44,11 +44,10 @@ def display_tables():
         print(f"\nTable {t.table_name} {t.availabile} - Checkout time is {t.start_time}")
 
 
-test = pool_tables[2]
-test.check_out_table()
 
 
-display_tables()
 
-# x = PoolTable(pool_tables[2])
-# print(x)
+# test = pool_tables[2]
+# test.check_out_table()
+
+# display_tables()
