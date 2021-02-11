@@ -43,13 +43,11 @@ def display_tables():
     for table in range(0, len(pool_tables)):
         t = pool_tables[table]
         if t.available == True:
-            t.available = "is available"
-            print(f"\nTable {t.table_name} {t.available}")
+            is_available = "is available"
+            print(f"\nTable {t.table_name} {is_available}")
         elif t.available == False:
-            t.available = "is NOT available"
-            print(f"\nTable {t.table_name} {t.available} - Checkout Time: {t.start_time} - Play Time: {t.time_played()}")
-        else:
-            print(f"{t.table_name} {t.available}")
+            is_not_available = "is NOT available"
+            print(f"\nTable {t.table_name} {is_not_available} - Checkout Time: {t.start_time} - Play Time: {t.time_played()}")
 
 
 while True: 
@@ -64,12 +62,22 @@ while True:
         display_tables()
     elif menu == "2":
         display_tables()
-        which_table = int(input("Enter the table number: "))
+        which_table = int(input("Checkout table number: "))
         table = pool_tables[which_table-1]
         if table.available == False:
-            print(f"Pool Table {table.table_name} is currently occupied")
+            print(f"\n /// Pool Table {table.table_name} is currently occupied ///")
         else:
             table.check_out_table()
+            display_tables()
+    elif menu == "3":
+        for table in range(0, len(pool_tables)):
+            t = pool_tables[table]
+            if t.available == False:
+                is_not_available = "is NOT available"
+                print(f"\nTable {t.table_name} {is_not_available} - Checkout Time: {t.start_time} - Play Time: {t.time_played()}")
+        which_table = int(input("Check-in table number: "))
+        table = pool_tables[which_table-1]
+        table.check_in_table()
         display_tables()
     elif menu == "q":
         break
