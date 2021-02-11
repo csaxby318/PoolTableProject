@@ -13,16 +13,16 @@ pool_tables = []
 class PoolTable:
     def __init__(self, name):
         self.table_name = name 
-        self.availabile = True
+        self.available = True
         self.start_time = None
         self.end_time = None
 # class function for checking out a pool table 
     def check_out_table(self):
-        self.availabile = False
+        self.available = False
         self.start_time = datetime.now()
 # class function for checking in a pool table   
     def check_in_table(self):
-        self.availabile = True 
+        self.available = True 
         self.end_time = datetime.now()
 # class function for calculating how long a pool table was checked out
     def time_played(self):
@@ -42,13 +42,14 @@ for index in range(1,13):
 def display_tables():
     for table in range(0, len(pool_tables)):
         t = pool_tables[table]
-        if t.availabile == True:
-            t.availabile = "is available"
-            print(f"\nTable {t.table_name} {t.availabile}")
+        if t.available == True:
+            t.available = "is available"
+            print(f"\nTable {t.table_name} {t.available}")
+        elif t.available == False:
+            t.available = "is NOT available"
+            print(f"\nTable {t.table_name} {t.available} - Checkout Time: {t.start_time} - Play Time: {t.time_played()}")
         else:
-            t.availabile = "is NOT available"
-            print(f"\nTable {t.table_name} {t.availabile} - Checkout Time: {t.start_time} - Play Time: {t.time_played()}")
-
+            print(f"{t.table_name} {t.available}")
 
 
 while True: 
@@ -65,11 +66,10 @@ while True:
         display_tables()
         which_table = int(input("Enter the table number: "))
         table = pool_tables[which_table-1]
-        for table in pool_tables:
-            if table.availabile == False:
-               print(f"Pool Table {table.table_name} is currently occupied")
-            else:
-                table.check_out_table()
+        if table.available == False:
+            print(f"Pool Table {table.table_name} is currently occupied")
+        else:
+            table.check_out_table()
         display_tables()
     elif menu == "q":
         break
