@@ -4,7 +4,7 @@
 from datetime import datetime
 #create a readable format for the time
 now = datetime.now()
-current_time = now.strftime("%H:%M")
+current_time = now.strftime("%I:%M%p on %m-%d-%Y")
 
 # list for pool tables
 pool_tables = []
@@ -19,14 +19,19 @@ class PoolTable:
 # class function for checking out a pool table 
     def check_out_table(self):
         self.availabile = False
-        self.start_time = current_time
+        self.start_time = datetime.now()
 # class function for checking in a pool table   
     def check_in_table(self):
         self.availabile = True 
-        self.end_time = current_time
+        self.end_time = datetime.now()
 # class function for calculating how long a pool table was checked out
     def time_played(self):
-        return self.start_time - self.end_time
+        if self.start_time == None:
+            return datetime.now() - datetime.now()
+        elif self.end_time == None:
+            return datetime.now() - self.start_time
+        else:
+            return self.end_time - self.start_time
 
 # using range function to generate pool table names, then appending those names (along with class properties) to my pool table list
 for index in range(1,13):
@@ -39,15 +44,38 @@ def display_tables():
         t = pool_tables[table]
         if t.availabile == True:
             t.availabile = "is available"
+            print(f"\nTable {t.table_name} {t.availabile}")
         else:
             t.availabile = "is NOT available"
-        print(f"\nTable {t.table_name} {t.availabile} - Checkout time is {t.start_time}")
+            print(f"\nTable {t.table_name} {t.availabile} - Checkout Time: {t.start_time} - Play Time: {t.time_played()}")
 
 
 
+while True: 
+    menu = input("""
+    1. Display all tables
+    2. Check-out a table 
+    3. Check-in a table 
+    q. Enter q to quit
+    Enter your choice: """)
+ 
+    if menu == "1":
+        display_tables()
+    elif menu == "2":
+        display_tables()
+        which_table = int(input("Enter the table number: "))
+        table = pool_tables[which_table-1]
+        for table in pool_tables:
+            if table.availabile == False:
+               print(f"Pool Table {table.table_name} is currently occupied")
+            else:
+                table.check_out_table()
+        display_tables()
+    elif menu == "q":
+        break
 
 
-# test = pool_tables[2]
-# test.check_out_table()
+
+# pool_tables[2].check_out_table()
 
 # display_tables()
