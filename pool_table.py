@@ -57,7 +57,7 @@ def display_tables():
 
 
 while True: 
-    # when that the admin sees
+    # what the admin sees
     print(f"\n  Frankie's Billiards Club")
     menu = input("""
     1. Display all tables
